@@ -17,11 +17,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 
 
-const Hero = () => {
+const Hero = ({ setOpenDialog }) => {
     const [userInput, setUserInput] = useState('');
     const {messages, setMessages} = useContext(MessagesContext);
     const {userDetail, setUserDetail} = useContext(UserDetailContext);
-    const [openDialog, setOpenDialog] = useState(false);
     const [loading, setLoading] = useState(false); // loading state for transition
     const CreateWorkspace = useMutation(api.workspace.CreateWorkspace);
     const router = useRouter();
@@ -99,9 +98,6 @@ const Hero = () => {
                     key={index}>{suggestion}</h2>
             ))}
         </div>
-        <SignInDialog
-        openDialog={openDialog} closeDialog={(v)=>setOpenDialog(v)}
-        />
     </div>
   )
 }

@@ -6,7 +6,7 @@ import Link from 'next/link';
 
 
 
-const Header = () => {
+const Header = ({ setOpenDialog }) => {
   const {userDetail, setUserDetail} = useContext(UserDetailContext);
   return (
     <div className='p-4 w-full flex flex-col items-center'>
@@ -18,8 +18,8 @@ const Header = () => {
       </Link>
       {!userDetail?.name && (
         <div className='flex gap-5 mt-2 justify-center'>
-          <Button variant='ghost'>Sign In</Button>
-          <Button className='text-white bg-pink-700'>Get Started</Button>
+          <Button variant='ghost' onClick={() => setOpenDialog(true)}>Sign In</Button>
+          <Button className='text-white bg-pink-700' onClick={() => setOpenDialog(true)}>Get Started</Button>
         </div>
       )}
     </div>

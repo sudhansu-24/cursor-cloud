@@ -11,21 +11,18 @@ import { useConvex } from 'convex/react'
 import { api } from '@/convex/_generated/api'
 import { SidebarProvider } from '@/components/ui/sidebar'
 import AppSideBar from '@/components/custom/AppSideBar'
-
-
+import SignInDialog from './../components/custom/SignInDialog'
 
 
 const Provider = ({children}) => {
     const [messages, setMessages] = useState();
     const [userDetail, setUserDetail] = useState();
+    const [openDialog, setOpenDialog] = useState(false); // LIFTED STATE
     const convex = useConvex();
 
     useEffect(() => {
       isAuthenticated();
-    
     }, [])
-    
-
 
     const isAuthenticated= async()=>{
         if(typeof window !== "undefined")
@@ -45,11 +42,8 @@ const Provider = ({children}) => {
   return (
     <div>
         <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_AUTH_CLIENT_ID_KEY}>
-
         <UserDetailContext value={{userDetail, setUserDetail}}>
-
         <MessagesContext.Provider value={{messages, setMessages}}>
-
         <NextThemesProvider
         attribute="class"
         defaultTheme="dark"
@@ -57,16 +51,16 @@ const Provider = ({children}) => {
         forcedTheme="dark"
         disableTransitionOnChange
         >
-            <Header/>
+            <Header setOpenDialog={setOpenDialog}/>
             <SidebarProvider defaultOpen={false}>
               <AppSideBar/>
-
       {children}
             </SidebarProvider>
         </NextThemesProvider>
-            </MessagesContext.Provider>
-            </UserDetailContext>
-            </GoogleOAuthProvider>
+        <SignInDialog openDialog={openDialog} closeDialog={setOpenDialog} />
+        </MessagesContext.Provider>
+        </UserDetailContext>
+        </GoogleOAuthProvider>
     </div>
   )
 }

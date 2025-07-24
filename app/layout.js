@@ -1,6 +1,7 @@
 import "./globals.css";
 import Provider from "./provider";
 import ConvexClientProvider from "./ConvexClientProvider";
+import React from "react";
 
 export const metadata = {
   title: "CursorCloud",
@@ -15,10 +16,8 @@ export default function RootLayout({ children }) {
       </head>
       <body className="min-h-screen flex flex-col items-center w-full">
         <ConvexClientProvider>
-
         <Provider>
-        {children}
-
+        {React.cloneElement(children, { setOpenDialog: undefined })}
         </Provider>
         </ConvexClientProvider>
       </body>
